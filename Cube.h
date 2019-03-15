@@ -44,10 +44,6 @@ public:
   void copy();
   void fade(float seconds, float dt);
   void animate();
-public:
-  int width();
-  int height();
-  int depth();
 private:
   Sinus sinus = Sinus();
   Spiral spiral = Spiral();
@@ -71,7 +67,7 @@ private:
   Mixer mixer1 = Mixer(&fireworks1, &fireworks2);
   Mixer mixer2 = Mixer(&insideScroller, &mixer1);
 private:
-  Animation* animation = &arrows; //*
+  Animation* animation = &mixer2; //*
   Animation* animations[17] = {
     &sinus, &spiral, &twinkel, &rain, &rainbow, &spin,
     &starfield, &sphere, &arrows, &bounce, &tree, &voxicles,
