@@ -155,7 +155,7 @@ private:
   void init();
 private:
   char* text;
-  int numChars;
+  unsigned int numChars;
   uint16_t bitPos;
   uint16_t startPos;
   Timer timer;
@@ -172,7 +172,7 @@ private:
 private:
   char* text;
   int numChars;
-  uint16_t charPos;
+  int16_t charPos;
   uint16_t zPos;
   Timer timer;
 };

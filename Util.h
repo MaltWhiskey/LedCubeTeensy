@@ -32,9 +32,11 @@ private:
 
 class Object {
 public:
-  Vector3 position = Vector3(0,0,0);
-  Vector3 velocity = Vector3(0,0,0);
-  Vector3 gravity  = Vector3(0,0,0);
+  Object(Vector3 p = Vector3(0,0,0), Vector3 v = Vector3(0,0,0),Vector3 g = Vector3(0,0,0)):position(p), velocity(v), gravity(g) {}
+public:
+  Vector3 position;
+  Vector3 velocity;
+  Vector3 gravity;
   ColorBlender cb;
 public:
   void move(float dt);

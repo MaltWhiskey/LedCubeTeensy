@@ -1,7 +1,6 @@
 #include "Animation.h"
 #include "Cube.h"
 #include "Color.h"
-#include "OctadecaTLC5940.h"
 #include "Font.h"
 #include "Util.h"
 
@@ -126,6 +125,7 @@ void Rain::init() {
   if(loops==0) loops = random(3,8);
 }
 void Rain::draw(float dt) {
+  (void)dt;
   if(timer1.ticks()) {
 	cube.down();
     for(int d=random(0,3);d>0;d--) {
@@ -296,6 +296,7 @@ void Mixer::init() {
   timer = 10.0f;
 }
 void Mixer::draw(float dt) {
+  (void)dt;
   if(!timer.expired()) {
 	a->animate(width, height, depth);
     b->animate(width, height, depth);
@@ -376,8 +377,8 @@ void OutsideScroller::draw(float dt) {
   colorwheel.turn(dt/20);
 
   for(int b=startPos;b<32;b++) {
-    int chrOffset = (b+bitPos-startPos)/8;
-    int bitOffset = (b+bitPos-startPos)%8;
+    unsigned int chrOffset = (b+bitPos-startPos)/8;
+    unsigned int bitOffset = (b+bitPos-startPos)%8;
     if(chrOffset >= numChars) continue;
     uint8_t chr = text[chrOffset];
 
