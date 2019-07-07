@@ -182,9 +182,9 @@ public:
   /* Function pointer object instance to call multiplex() from the static interrupt
    * service routine declared as void ftm1_isr(void) */
   static OctadecaTLC5940* me;
+  // Start timers and interrupts
+  void begin();
 private:
-  void init();
-  void start();
   void setChannel(uint16_t channel, uint16_t color);
   void setChannelBuffer(int layer);
   void sendChannelBuffer();

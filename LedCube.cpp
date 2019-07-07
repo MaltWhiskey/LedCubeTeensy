@@ -11,8 +11,7 @@ NoiseGenerator generator;
  * Initialize setup parameters
  *-------------------------------------------------------------------------------------*/
 void setup() {
-  Serial.begin(9600);
-  delay(2000);
+  cube.begin();
   colorwheel.add(Color::RED);
   colorwheel.add(Color::GREEN);
   colorwheel.add(Color::BLUE);

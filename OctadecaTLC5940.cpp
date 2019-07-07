@@ -10,8 +10,6 @@ void ftm1_isr(void) {
 // Initialize all TLC, start the timers and set the static me to enable multiplexing.
 OctadecaTLC5940::OctadecaTLC5940() {
   me=this;
-  init();
-  start();
 }
 /* VPRG=GND and DCPRG=VCC in my design, this sets the operating mode in GSPWM mode using
  * the DC-Register, thus never using the EEPROM values. The content of the DC-Register
@@ -24,7 +22,7 @@ OctadecaTLC5940::OctadecaTLC5940() {
  *
  * First set the BLANK high to prevent turning on any leds when we switch the pin to
  * output mode. */
-void OctadecaTLC5940::init() {
+void OctadecaTLC5940::begin() {
   // Set BLANK high to disable all outputs, there should also be a 10K pull up on this pin.
   digitalWriteFast(BLANK, HIGH);
   pinMode(BLANK, OUTPUT);
@@ -64,9 +62,7 @@ void OctadecaTLC5940::init() {
     digitalWriteFast(SCLK, LOW);
     delayMicroseconds(1);
   }
-}
 
-void OctadecaTLC5940::start() {
   /* System Clock Gating Control Register 4
    * Compare match timer CMT Clock Gate Control -> Clock enabled */
   SIM_SCGC4 |= SIM_SCGC4_CMT;
