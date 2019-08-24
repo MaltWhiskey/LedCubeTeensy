@@ -8,8 +8,11 @@ private:
   bool hasSpare = false;
   float spare;
 public:
+  // get next normally divided value with given mean and stdev
   float nextGaussian(float mean, float stdev);
+  // nextGaussian but with a max deviation of range * stdev
   float nextGaussian(float mean, float stdev, int range);
+  // get a random float value between min and max (boundaries included)
   float nextRandom(float min, float max);
 };
 
@@ -32,15 +35,15 @@ private:
 
 class Object {
 public:
-  Object(Vector3 p = Vector3(0,0,0), Vector3 v = Vector3(0,0,0),Vector3 g = Vector3(0,0,0)):position(p), velocity(v), gravity(g) {}
-public:
-  Vector3 position;
-  Vector3 velocity;
-  Vector3 gravity;
+  Vector3 position = Vector3(0,0,0);
+  Vector3 velocity = Vector3(0,0,0);
+  Vector3 gravity  = Vector3(0,0,0);
   ColorBlender cb;
 public:
+  Object(Vector3 p = Vector3(0,0,0), Vector3 v = Vector3(0,0,0),Vector3 g = Vector3(0,0,0)):position(p), velocity(v), gravity(g) {}
+public:
   void move(float dt);
-  // determine is v is within radius of this
+  // determine if v is within radius of this
   bool hit(float x, float y, float z, float radius) const;
   // bounce object on top of display
   void bounce(float dt, float vy, int width, int height, int depth);

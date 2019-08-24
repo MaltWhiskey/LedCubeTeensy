@@ -160,7 +160,7 @@ private:
   /* This is the pin mapping for multiplexing the layers of the led cube, starting with
    * the bottom layer. All layers are switched with a mosfet LOW=ON, HIGH=OFF, they are
    * connected with a 1K pull up resistor as to not switch them on at boot up time. */
-  uint8_t m_layerPin[Y_LAYERS + 1] = {14, 15, 16, 17, 18, 19, 20, 21, 22, 14};
+  uint8_t m_layerPin[Y_LAYERS] = {14, 15, 16, 17, 18, 19, 20, 21, 22};
   /* Initialize settings for transferring data using DMA and SPI */
   DMAChannel m_dmaChannel;
   SPISettings m_spiSettings = SPISettings(SPISPEED, MSBFIRST, SPI_MODE0);
@@ -169,9 +169,9 @@ private:
   /* There should be only one displayed layer that is set to LOW, all other layers should
    * be set to HIGH. The displaying of the layers will start at the bottom (y=0). Every
    * cycle turns off the current layer first and than turns on the next one. */
-  volatile uint8_t m_LayerOffset = 0;
-  volatile uint8_t m_currentLayer = m_layerPin[m_LayerOffset];
-  volatile uint8_t m_nextLayer = m_layerPin[m_LayerOffset+1];
+  uint8_t m_LayerOffset = 0;
+  uint8_t m_currentLayer = m_layerPin[0];
+  uint8_t m_nextLayer    = m_layerPin[1];
 public:
   OctadecaTLC5940();
   void setVoxel(int x, int y, int z, Color c);

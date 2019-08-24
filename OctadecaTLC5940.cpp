@@ -171,16 +171,19 @@ void OctadecaTLC5940::multiplex() {
   digitalWriteFast(XLAT, LOW);
   // Turn on outputs
   digitalWriteFast(BLANK, LOW);
+
   // Clear interrupt overflow flag register
   if(FTM1_SC & FTM_SC_TOF) {
 	 FTM1_SC &= ~FTM_SC_TOF;
   }
+
   // Determine the next current and next layer
   if (++m_LayerOffset == Y_LAYERS) {
 	  m_LayerOffset = 0;
   }
   m_currentLayer = m_layerPin[m_LayerOffset];
-  m_nextLayer = m_layerPin[m_LayerOffset+1];
+  m_nextLayer = m_layerPin[(m_LayerOffset+1) % Y_LAYERS];
+
   // Prepare the NEXT layer, this will be send out NEXT multiplex refresh cycle.
   if(m_LayerOffset==Y_LAYERS-1) {
     // If the next animation frame is ready, swap the rendering and displayed cube

@@ -1,14 +1,14 @@
 #include "Util.h"
 #include <math.h>
 /*----------------------------------------------------------------------------------------------
- * RANDOM CLASS
+ * NoiseGenerator CLASS
  *----------------------------------------------------------------------------------------------
- *
+ * This class generates numbers according to a plan. The numbers can be random, from a
+ * Perlin noise like distribution or from a Gaussian distribution.
  */
 float NoiseGenerator::nextRandom(float min, float max) {
   return min + random(1UL << 31) * (double)(max - min) / (1UL <<31);
 }
-
 float NoiseGenerator::nextGaussian(float mean, float stdev, int range) {
   float gauss;
   do {
@@ -17,7 +17,6 @@ float NoiseGenerator::nextGaussian(float mean, float stdev, int range) {
   while( (gauss > range*stdev+mean) || (gauss < -range*stdev+mean));
   return gauss;
 }
-
 float NoiseGenerator::nextGaussian(float mean, float stdev) {
   if(hasSpare) {
 	hasSpare = false;
@@ -39,7 +38,17 @@ float NoiseGenerator::nextGaussian(float mean, float stdev) {
 /*----------------------------------------------------------------------------------------------
  * TIMER CLASS
  *----------------------------------------------------------------------------------------------
+ * The Timer class is used to do timing specific actions. All time is in seconds
  *
+ * Sets a timer for 0.10 seconds:
+ * Timer t = 0.10f;
+ * Timer t = Timer(0.10f);
+ *
+ * Returns an integer of the times the timer has counted 0.10 seconds
+ * t.ticks();
+
+ * Returns true if the timer has counted to 0.10 seconds
+ * t.expired();
  */
 Timer::Timer() {
   m_startTime=0;
@@ -71,18 +80,16 @@ int Timer::ticks() {
   }
   return 0;
 }
-
 bool Timer::expired() {
   ticks(); return (m_ticks!=0);
 }
 /*----------------------------------------------------------------------------------------------
  * OBJECT CLASS
  *----------------------------------------------------------------------------------------------
- * x,y,z are floats 8.9 is inside the cube even though width is 8 for the cube [0]...[8]
- * Because 8.9 gets truncated to 8 after casting to int. DON'T ROUND the values for x,y and z.
- * For example (int)x is 0 if x >= 0 and x < 1
+ * The object class represents an object with a position and velocity + gravitational forces
+ * acting upon it. Forces get applied over time.
  *
- * Delta Time (float dt) is in seconds
+ * Delta Time (float dt) is in seconds.
  */
 void Object::move(float dt) {
   position = position + velocity*dt;
@@ -105,7 +112,6 @@ void Object::bounce(float dt, float vy, int width, int height, int depth) {
 void Object::drag(float dt, float n) {
   velocity = velocity * pow(n, dt);
 }
-// 0 .. 8 are inside, but 8.99 is also inside after truncating
 bool Object::inside(int width, int height, int depth) {
   return (position.x < width && position.x >= 0) &&
 		 (position.y < height && position.y >= 0) &&
