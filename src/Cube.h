@@ -1,7 +1,7 @@
 #ifndef CUBE_H
 #define CUBE_H
-#include "OctadecaTLC5940.h"
 #include "Animation.h"
+#include "OctadecaTLC5940.h"
 /*       3D Led cube coordinate system
 
               + + + + + + + + +
@@ -23,25 +23,29 @@
     0 + + + + + + + + + 0
     0 1 2 3 4 5 6 7 8---X               */
 class Cube : public OctadecaTLC5940 {
-private:
+ private:
   int m_Width;
   int m_Height;
   int m_Depth;
-private:
+
+ private:
   void fade(int steps);
-public:
+
+ public:
   Cube(int width, int height, int depth);
   using OctadecaTLC5940::setVoxel;
   void setVoxel(Vector3& v, Color c);
   void mergeVoxel(int x, int y, int z, Color);
   void mergeVoxel(Vector3& v, Color c);
   void radiateVoxel(Vector3& v, Color c, float distance);
-  float map(float value, float currentMin, float currentMax, float newMin, float newMax);
+  float map(float value, float currentMin, float currentMax, float newMin,
+            float newMax);
   void down();
   void copy();
   void fade(float seconds, float dt);
   void animate();
-private:
+
+ private:
   Sinus sinus = Sinus();
   Spiral spiral = Spiral();
   Twinkel twinkel = Twinkel();
@@ -57,18 +61,26 @@ private:
 
   Fireworks fireworks1 = Fireworks();
   Fireworks fireworks2 = Fireworks();
-  InsideScroller insideScroller = InsideScroller("Lucan");
-  InsideScroller insideScroller2 = InsideScroller("Calista is jarig");
-  OutsideScroller outsideScroller = OutsideScroller("\x1F""Calista 6 Jaar\x1F");
-  OutsideScroller outsideScroller2 = OutsideScroller("\x1FMascha\x1F");
+  InsideScroller insideScroller = InsideScroller("Dalton Lyceum Barendrecht");
+  InsideScroller insideScroller2 = InsideScroller("Technasium\x1F");
+  OutsideScroller outsideScroller = OutsideScroller(
+      "\x1F"
+      "Dalton Lyceum Barendrecht\x1F");
+  OutsideScroller outsideScroller2 = OutsideScroller(
+      "\x1F"
+      "Technasium O&O\x1F");
   Mixer mixer1 = Mixer(&fireworks1, &fireworks2);
   Mixer mixer2 = Mixer(&insideScroller2, &mixer1);
-private:
+
+ private:
   Animation* animation = &mixer2;
-  Animation* animations[17] = {
-    &sinus, &spiral, &twinkel, &rain, &rainbow, &spin,
-    &starfield, &sphere, &arrows, &bounce, &tree, &voxicles,
-	&mixer1, &mixer2, &insideScroller2, &outsideScroller, &outsideScroller2
-  };
+  Animation* animations[16] = {&sinus,           &spiral,
+                               &twinkel,         &rain,
+                               &rainbow,         &spin,
+                               &starfield,       &sphere,
+                               &arrows,          &bounce,
+                               &voxicles,        &mixer1,
+                               &mixer2,          &insideScroller2,
+                               &outsideScroller, &outsideScroller2};
 };
 #endif
